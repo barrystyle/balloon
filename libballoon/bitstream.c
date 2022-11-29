@@ -32,7 +32,7 @@ bitstream_init (struct bitstream *b)
     return ERROR_OPENSSL_HASH;
   b->initialized = false;
 
-  EVP_CIPHER_CTX_init (&b->ctx);
+  b->ctx = EVP_CIPHER_CTX_new();
 
   if (!(b->zeros = malloc (BITSTREAM_BUF_SIZE * sizeof (uint8_t))))
     return ERROR_MALLOC;
@@ -103,7 +103,7 @@ bitstream_seed_finalize (struct bitstream *b)
   if (!EVP_CIPHER_CTX_set_padding (&b->ctx, 1))
     return ERROR_OPENSSL_AES;
 
-  if (!EVP_EncryptInit (&b->ctx, EVP_aes_128_ctr (), key_bytes, iv))
+  if (!EVP_EncryptInit (b->ctx, EVP_aes_128_ctr (), key_bytes, iv))
     return ERROR_OPENSSL_AES;
 
   b->initialized = true;

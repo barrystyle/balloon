@@ -153,7 +153,7 @@ main (int argc, char *argv[])
 
 
   int error;
-  const double wall_start = wall_sec ();
+  const double wall_start = current_timestamp();
   char blob[BLOB_LEN+1];
 
   if (verify_blob) {
@@ -173,7 +173,7 @@ main (int argc, char *argv[])
       return -1;
     }
   }
-  const double wall_end = wall_sec ();
+  const double wall_end = current_timestamp();
   const double wall_diff = wall_end - wall_start;
   printf("Time total      : %lg\n", wall_diff);
   printf("Hashes per sec  : %lg\n", (1.0f / wall_diff));

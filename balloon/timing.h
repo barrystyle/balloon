@@ -19,6 +19,7 @@
 
 #include <time.h>
 #include <sys/time.h>
+#include <math.h>
 
 inline uint64_t 
 rdtsc (void)
@@ -34,6 +35,15 @@ wall_sec (void)
     struct timeval t;
     gettimeofday (&t, NULL);
     return (double)t.tv_sec + ((double)t.tv_usec/1000000.0);
+}
+
+long long current_timestamp()
+{
+    long long milliseconds;
+    struct timespec te;
+    clock_gettime(CLOCK_REALTIME, &te);
+    milliseconds = 1000LL*te.tv_sec + round(te.tv_nsec/1e6);
+    return milliseconds;
 }
 
 #endif
